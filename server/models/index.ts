@@ -2,14 +2,13 @@
 
 var fs = require('fs');
 var path = require('path');
-//import * as Sequelize from 'sequelize';
-var Sequelize = require('sequelize');
+import * as Sequelize from 'sequelize';
+//var Sequelize = require('sequelize');
 var basename = path.basename(module.filename);
 var config = require('../config/env/config')();
 var env = config.env || 'development';
 var db = {};
 
-console.log(config.db)
 
 const sequelize = new Sequelize(config.db, config.username, config.password, {
   host: 'localhost',

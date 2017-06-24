@@ -36,7 +36,7 @@ describe('Testes de Integracao', () => {
                 rua: "aaaaaaaaaa"
             }
         ]
-    };
+    }
 
     const clienteB = {
         nome: 'bbbbbbbbbb',
@@ -82,60 +82,23 @@ describe('Testes de Integracao', () => {
         })
     })
 
-/*
-    beforeEach((done) => {
-        model.Clientes.destroy({
-            where: {}
-        }).then(() => {
-            return model.Clientes.create(clienteSet);
-        }).then(c => {
-            model.Clientes.create(cliente)
-                .then(() => {
-                    token = jwt.encode({ id: c.id }, config.secret)
-                    done();
-                })
-        }).catch(err => {
-            console.log("deu erro no before each")
-        })
-    })
-
-
-    describe('POST /token', () => {
-        it('Deve receber um JWT', done => {
-            const credentials = {
-                email: clienteSet.email,
-                password: clienteSet.password
-            };
+  describe("GET /api/clientes/:id", () => {
+        it('Deve retornar um Json com apenas um usuário', done => {
             request(app)
-                .post('/token')
-                .send(credentials)
+                .get(`/api/clientes/1`)
+                .set('Content-Type', 'application/json')
+                .set('Authorization', `JWT ${token}`)
                 .end((error, res) => {
                     expect(res.status).to.equal(HTTPStatus.OK);
-                    expect(res.body.token).to.equal(`${token}`)
+                    expect(res.body.payload.id).to.equal(1)
+                    expect(res.body.payload).to.have.all.keys([
+                        'id', 'nome', 'email', 'password', 'cpf'
+                    ]);
+                    id = res.body.payload.id;
                     done(error);
                 });
         });
-
-        it('Não deve gerar Token', done => {
-            const credentials = {
-                email: 'email@emailqualquer.com',
-                password: 'qualquer'
-            };
-            request(app)
-                .post('/token')
-                .send(credentials)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.UNAUTHORIZED);
-                    expect(res.body).to.empty;
-                    done(error);
-                })
-        })
-    })
-
-
-
-*/
-
+    });
 /*
     describe("GET /api/clientes/:id", () => {
         it('Deve retornar um Json com apenas um usuário', done => {
@@ -202,5 +165,58 @@ describe('Testes de Integracao', () => {
 */
 
 
+/*
+    beforeEach((done) => {
+        model.Clientes.destroy({
+            where: {}
+        }).then(() => {
+            return model.Clientes.create(clienteSet);
+        }).then(c => {
+            model.Clientes.create(cliente)
+                .then(() => {
+                    token = jwt.encode({ id: c.id }, config.secret)
+                    done();
+                })
+        }).catch(err => {
+            console.log("deu erro no before each")
+        })
+    })
+
+
+    describe('POST /token', () => {
+        it('Deve receber um JWT', done => {
+            const credentials = {
+                email: clienteSet.email,
+                password: clienteSet.password
+            };
+            request(app)
+                .post('/token')
+                .send(credentials)
+                .end((error, res) => {
+                    expect(res.status).to.equal(HTTPStatus.OK);
+                    expect(res.body.token).to.equal(`${token}`)
+                    done(error);
+                });
+        });
+
+        it('Não deve gerar Token', done => {
+            const credentials = {
+                email: 'email@emailqualquer.com',
+                password: 'qualquer'
+            };
+            request(app)
+                .post('/token')
+                .send(credentials)
+                .end((error, res) => {
+                    expect(res.status).to.equal(HTTPStatus.UNAUTHORIZED);
+                    expect(res.body).to.empty;
+                    done(error);
+                })
+        })
+    })
+
+
+
+*/
 
 })

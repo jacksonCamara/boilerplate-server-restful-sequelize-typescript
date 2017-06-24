@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataType) {
-    var Enderecos = sequelize.define("Enderecos", {
+    var Enderecos = sequelize.define("enderecos", {
         id: {
             type: DataType.INTEGER,
             primaryKey: true,
@@ -34,7 +34,7 @@ module.exports = function (sequelize, DataType) {
         },
     });
     Enderecos.associate = function (models) {
-        Enderecos.belongsTo(models.Clientes);
+        Enderecos.belongsTo(models.clientes);
     };
     return Enderecos;
 };

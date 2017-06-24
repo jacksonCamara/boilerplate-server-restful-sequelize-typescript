@@ -5,7 +5,6 @@ const model = require('../../models');
 class Clientes implements ICliente {
     public id: number;
     public nome: string;
-    public cpf: string;
     public email: string;
     public password: string;
 
@@ -14,41 +13,43 @@ class Clientes implements ICliente {
     }
 
     create(cliente: any) {
-        return model.Clientes.create({
+        return model.clientes.create({
             nome: cliente.nome,
-            cpf: cliente.cpf,
             email: cliente.email,
             password: cliente.password,
-            Telefones: cliente.telefones,
-            Enderecos: cliente.enderecos,
+            telefones: cliente.telefones,
+            enderecos: cliente.enderecos,
         }, {
-                include: [{ model: model.Telefones }, { model: model.Enderecos }]
+                include: [{ model: model.telefones }, { model: model.enderecos }]
             })
     }
 
     getAll(): Bluebird<ICliente[]> {
         console.log('getall')
-        return model.Clientes.findAll({
-            order: ['nome']
-        })
+        return model.clientes.findAll({
+             include: [{ model: model.telefones }, { model: model.enderecos }]
+           
+        }, {
+                order: ['nome']
+            })
             .then(createClientes)
     }
     getById(id: number): Bluebird<IClienteDetail> {
-        return model.Clientes.findOne({
+        return model.clientes.findOne({
             where: { id }
         })
-        .then(createClienteById);
+            .then(createClienteById);
     }
 
     getByEmail(email: string): Bluebird<IClienteDetail> {
-        return model.Clientes.findOne({
+        return model.clientes.findOne({
             where: { email }
         })
             .then(createClienteByEmail);
     }
 
     update(id: number, user: any) {
-        return model.Clientes.update(user, {
+        return model.clientes.update(user, {
             where: { id },
             fields: ['nome', 'email', 'password'], //os dados que podem ser alterados
             hooks: true,
@@ -58,7 +59,7 @@ class Clientes implements ICliente {
 
     delete(id: number) {
         console.log('aqui no service')
-        return model.Clientes.destroy({
+        return model.clientes.destroy({
             where: { id }
         });
     }

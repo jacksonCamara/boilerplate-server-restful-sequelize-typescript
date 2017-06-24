@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 
 module.exports = (sequelize, DataType) => {
-    const Clientes = sequelize.define("Clientes", {
+    const Clientes = sequelize.define("clientes", {
         id: {
             type: DataType.INTEGER,
             primaryKey: true,
@@ -27,8 +27,8 @@ module.exports = (sequelize, DataType) => {
         }
     });
     Clientes.associate = models => {
-        Clientes.hasMany(models.Telefones);
-        Clientes.hasMany(models.Enderecos);
+        Clientes.hasMany(models.telefones);
+        Clientes.hasMany(models.enderecos);
     }
 
     Clientes.beforeCreate((cliente) => {

@@ -1,7 +1,7 @@
 "use strict";
 var bcrypt = require("bcrypt");
 module.exports = function (sequelize, DataType) {
-    var Clientes = sequelize.define("Clientes", {
+    var Clientes = sequelize.define("clientes", {
         id: {
             type: DataType.INTEGER,
             primaryKey: true,
@@ -27,8 +27,8 @@ module.exports = function (sequelize, DataType) {
         }
     });
     Clientes.associate = function (models) {
-        Clientes.hasMany(models.Telefones);
-        Clientes.hasMany(models.Enderecos);
+        Clientes.hasMany(models.telefones);
+        Clientes.hasMany(models.enderecos);
     };
     Clientes.beforeCreate(function (cliente) {
         return hashPassword(cliente);
