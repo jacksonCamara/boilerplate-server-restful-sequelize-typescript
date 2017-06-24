@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+//import * as Sequelize from 'sequelize';
 var Sequelize = require('sequelize');
 var basename = path.basename(module.filename);
 var config = require('../config/env/config')();
@@ -13,7 +14,7 @@ var sequelize = new Sequelize(config.db, config.username, config.password, {
         max: 5,
         min: 0,
         idle: 10000
-    }
+    },
 });
 fs
     .readdirSync(__dirname)

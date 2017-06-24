@@ -21,6 +21,9 @@ module.exports = function (sequelize, DataType) {
         },
         sexo: {
             type: DataType.STRING,
+        },
+        dataNascimento: {
+            type: DataType.BOOLEAN
         }
     });
     Clientes.associate = function (models) {

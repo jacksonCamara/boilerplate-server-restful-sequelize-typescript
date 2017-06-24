@@ -1,5 +1,5 @@
 module.exports = {
-    env: 'development',
+    env: 'test',
     db: 'postgres',
     dialect: 'postgres',
     username: 'postgres',
@@ -7,7 +7,7 @@ module.exports = {
     host: 'localhost',
     serverPort: 3000,
     pgPort: 5432,
-    dbURL: 'postgres://postgres:pgroot@localhost:5432/ts-api',
+    dbURL: 'postgres://postgres:pgroot@localhost:5432/ts-api-test',
     secret: 'S3cr3t'
 };
 //# sourceMappingURL=development.env.js.map

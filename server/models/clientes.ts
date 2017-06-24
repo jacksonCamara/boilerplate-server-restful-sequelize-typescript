@@ -21,6 +21,9 @@ module.exports = (sequelize, DataType) => {
         },
         sexo: {
             type: DataType.STRING,
+        },
+        dataNascimento: {
+            type: DataType.BOOLEAN
         }
     });
     Clientes.associate = models => {

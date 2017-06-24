@@ -12,57 +12,75 @@ describe('Testes de Integracao', () => {
     let token;
 
 
-    const cliente = {
-        nome: 'cliente',
-        cpf: "0342098340932",
-        email: 'cliente@email.com',
-        password: 'cliente',
+    const clienteA = {
+        nome: 'aaaaaaaaaa',
+        cpf: "aaaaaaaaaa",
+        email: 'aaaaaaaaaa',
+        password: 'aaaaaaaaaa',
 
         telefones: [
             {
-                numero: "AAAAAAAAA"
+                numero: "aaaaaaaaaa"
             },
             {
-                numero: "BBBBBBBBBBBB"
+                numero: "aaaaaaaaaa"
             }
         ],
         enderecos: [
             {
-                cep: "888888",
-                rua: "88888888"
+                cep: "aaaaaaaaaa",
+                rua: "aaaaaaaaaa"
             },
             {
-                cep: "9999999",
-                rua: "99999999"
+                cep: "aaaaaaaaaa",
+                rua: "aaaaaaaaaa"
             }
         ]
     };
 
-    const clienteSet = {
-        nome: 'cliente1',
-        cpf: "03420983409321",
-        email: 'cliente@email.com1',
-        password: 'cliente1',
+    const clienteB = {
+        nome: 'bbbbbbbbbb',
+        cpf: "bbbbbbbbbb",
+        email: 'bbbbbbbbbb',
+        password: 'bbbbbbbbbb',
 
         telefones: [
             {
-                numero: "AAAAAAAAA1"
+                numero: "bbbbbbbbbb"
             },
             {
-                numero: "BBBBBBBBBBBB1"
+                numero: "bbbbbbbbbb"
             }
         ],
         enderecos: [
             {
-                cep: "8888881",
-                rua: "888888881"
+                cep: "bbbbbbbbbb",
+                rua: "bbbbbbbbbb"
             },
             {
-                cep: "99999991",
-                rua: "999999991"
+                cep: "bbbbbbbbbb",
+                rua: "bbbbbbbbbb"
             }
         ]
     }
+
+
+
+    describe("POST /api/clientes/create", () => {
+        it('Deve criar um novo usuário', done => {
+            request(app)
+                .post('/api/clientes/create')
+                .set('Content-Type', 'application/json')
+                .set('Authorization', `JWT ${token}`)
+                .send(clienteA)
+                .end((error, res) => {
+                    expect(res.status).to.equal(HTTPStatus.OK);
+                    expect(res.body.payload.nome).to.equal(clienteA.nome);
+                    expect(res.body.payload.email).to.equal(clienteA.email);
+                    done(error);
+                })
+        })
+    })
 
 /*
     beforeEach((done) => {
@@ -117,21 +135,7 @@ describe('Testes de Integracao', () => {
 
 
 */
-    describe("POST /api/clientes/create", () => {
-        it('Deve criar um novo usuário', done => {
-            request(app)
-                .post('/api/clientes/create')
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `JWT ${token}`)
-                .send(cliente)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.OK);
-                    expect(res.body.payload.nome).to.equal(cliente.nome);
-                    expect(res.body.payload.email).to.equal(cliente.email);
-                    done(error);
-                })
-        })
-    })
+
 /*
     describe("GET /api/clientes/:id", () => {
         it('Deve retornar um Json com apenas um usuário', done => {
