@@ -1,20 +1,17 @@
-import { ICliente, IClienteDetail, createCliente, createClientes, createClienteById, createClienteByEmail } from './interface';
 import * as Bluebird from 'bluebird';
+import { ClienteInterface, ICliente, ITelefone } from './interface';
 const model = require('../../models');
 
-class Clientes implements ICliente {
-    public id: number;
-    public nome: string;
-    public email: string;
-    public password: string;
+export class ClienteService {
+    private clienteInterface = new ClienteInterface();
 
-    constructor() {
-
-    }
-
-    create(cliente: any) {
+    public create(cliente: any) {
+        console.log("=========================== imprimindo o model no service=================================")
+        //console.log(model);
         return model.clientes.create({
             nome: cliente.nome,
+            cpf: cliente.cpf,
+            sexo: cliente.sexo,
             email: cliente.email,
             password: cliente.password,
             telefones: cliente.telefones,
@@ -24,22 +21,28 @@ class Clientes implements ICliente {
             })
     }
 
-    getAll(): Bluebird<ICliente[]> {
-        console.log('getall')
+    public getAll(): Bluebird<ICliente> {
         return model.clientes.findAll({
-             include: [{ model: model.telefones }, { model: model.enderecos }]
-           
-        }, {
-                order: ['nome']
-            })
-            .then(createClientes)
-    }
-    getById(id: number): Bluebird<IClienteDetail> {
-        return model.clientes.findOne({
-            where: { id }
+            include: [{ model: model.telefones }, { model: model.enderecos }],
+            order: ['nome']
         })
-            .then(createClienteById);
+            .then(data => {
+                return this.clienteInterface.createClientes(data)
+            })
     }
+
+    public getById(id: number): Bluebird<ICliente> {
+        return model.clientes.findOne({
+            where: { id: id },
+            include: [{ model: model.telefones }, { model: model.enderecos }]
+        })
+            .then(data => {
+                return this.clienteInterface.createCliente(data)
+            })
+    }
+
+
+    /*
 
     getByEmail(email: string): Bluebird<IClienteDetail> {
         return model.clientes.findOne({
@@ -63,6 +66,5 @@ class Clientes implements ICliente {
             where: { id }
         });
     }
+    */
 }
-
-export default Clientes;

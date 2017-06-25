@@ -1,28 +1,25 @@
 "use strict";
 var controller_1 = require("./controller");
-var ClienteCtrl;
 var ClienteRoutes = (function () {
     function ClienteRoutes() {
-        ClienteCtrl = new controller_1.default();
+        this.clienteController = new controller_1.ClienteController();
     }
-    ClienteRoutes.prototype.index = function (req, res) {
-        return ClienteCtrl.getAll(req, res);
-    };
     ClienteRoutes.prototype.create = function (req, res) {
-        return ClienteCtrl.createCliente(req, res);
+        return this.clienteController.createCliente(req, res);
+    };
+    ClienteRoutes.prototype.index = function (req, res) {
+        return this.clienteController.getAll(req, res);
     };
     ClienteRoutes.prototype.findOne = function (req, res) {
-        return ClienteCtrl.getById(req, res);
+        return this.clienteController.getById(req, res);
     };
     ClienteRoutes.prototype.update = function (req, res) {
-        return ClienteCtrl.updateCliente(req, res);
+        return this.clienteController.updateCliente(req, res);
     };
     ClienteRoutes.prototype.destroy = function (req, res) {
-        console.log('aqui na rota do cliente');
-        return ClienteCtrl.deleteCliente(req, res);
+        return this.clienteController.deleteCliente(req, res);
     };
     return ClienteRoutes;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = ClienteRoutes;
+exports.ClienteRoutes = ClienteRoutes;
 //# sourceMappingURL=routes.js.map

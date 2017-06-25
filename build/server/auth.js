@@ -4,13 +4,13 @@ var passport_jwt_1 = require("passport-jwt");
 var service_1 = require("./modules/Clientes/service");
 var config = require('./config/env/config')();
 function AuthConfig() {
-    var ClienteService = new service_1.default();
+    var clienteService = new service_1.ClienteService();
     var opts = {
         secretOrKey: config.secret,
         jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeader()
     };
     passport.use(new passport_jwt_1.Strategy(opts, function (jwtPayload, done) {
-        ClienteService.getById(jwtPayload.id)
+        clienteService.getById(jwtPayload.id)
             .then(function (cliente) {
             if (cliente) {
                 return done(null, {

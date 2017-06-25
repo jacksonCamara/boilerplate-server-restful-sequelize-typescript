@@ -1,12 +1,42 @@
 "use strict";
 var interface_1 = require("./interface");
 var model = require('../../models');
-var Clientes = (function () {
-    function Clientes() {
+var ClienteService = (function () {
+    function ClienteService() {
+        this.clienteInterface = new interface_1.ClienteInterface();
+        /*
+    
+        getByEmail(email: string): Bluebird<IClienteDetail> {
+            return model.clientes.findOne({
+                where: { email }
+            })
+                .then(createClienteByEmail);
+        }
+    
+        update(id: number, user: any) {
+            return model.clientes.update(user, {
+                where: { id },
+                fields: ['nome', 'email', 'password'], //os dados que podem ser alterados
+                hooks: true,
+                individualHooks: true
+            })
+        }
+    
+        delete(id: number) {
+            console.log('aqui no service')
+            return model.clientes.destroy({
+                where: { id }
+            });
+        }
+        */
     }
-    Clientes.prototype.create = function (cliente) {
+    ClienteService.prototype.create = function (cliente) {
+        console.log("=========================== imprimindo o model no service=================================");
+        //console.log(model);
         return model.clientes.create({
             nome: cliente.nome,
+            cpf: cliente.cpf,
+            sexo: cliente.sexo,
             email: cliente.email,
             password: cliente.password,
             telefones: cliente.telefones,
@@ -15,43 +45,27 @@ var Clientes = (function () {
             include: [{ model: model.telefones }, { model: model.enderecos }]
         });
     };
-    Clientes.prototype.getAll = function () {
-        console.log('getall');
+    ClienteService.prototype.getAll = function () {
+        var _this = this;
         return model.clientes.findAll({
-            include: [{ model: model.telefones }, { model: model.enderecos }]
-        }, {
+            include: [{ model: model.telefones }, { model: model.enderecos }],
             order: ['nome']
         })
-            .then(interface_1.createClientes);
+            .then(function (data) {
+            return _this.clienteInterface.createClientes(data);
+        });
     };
-    Clientes.prototype.getById = function (id) {
+    ClienteService.prototype.getById = function (id) {
+        var _this = this;
         return model.clientes.findOne({
-            where: { id: id }
-        })
-            .then(interface_1.createClienteById);
-    };
-    Clientes.prototype.getByEmail = function (email) {
-        return model.clientes.findOne({
-            where: { email: email }
-        })
-            .then(interface_1.createClienteByEmail);
-    };
-    Clientes.prototype.update = function (id, user) {
-        return model.clientes.update(user, {
             where: { id: id },
-            fields: ['nome', 'email', 'password'],
-            hooks: true,
-            individualHooks: true
+            include: [{ model: model.telefones }, { model: model.enderecos }]
+        })
+            .then(function (data) {
+            return _this.clienteInterface.createCliente(data);
         });
     };
-    Clientes.prototype.delete = function (id) {
-        console.log('aqui no service');
-        return model.clientes.destroy({
-            where: { id: id }
-        });
-    };
-    return Clientes;
+    return ClienteService;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = Clientes;
+exports.ClienteService = ClienteService;
 //# sourceMappingURL=service.js.map

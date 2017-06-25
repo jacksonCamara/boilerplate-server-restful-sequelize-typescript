@@ -1,35 +1,30 @@
 import { Request, Response } from 'express';
-import ClienteController from './controller';
-let ClienteCtrl;
+import { ClienteController } from './controller';
 
-class ClienteRoutes {
+export class ClienteRoutes {
+    private clienteController: ClienteController;
+
     constructor() {
-        ClienteCtrl = new ClienteController();
+        this.clienteController = new ClienteController();
     }
 
-    index(req: Request, res: Response){
-        
-        return ClienteCtrl.getAll(req, res)
+    create(req: Request, res: Response) {
+        return this.clienteController.createCliente(req, res)
     }
 
-    create(req: Request, res: Response){
-        return ClienteCtrl.createCliente(req, res)
-        
+    index(req: Request, res: Response) {
+        return this.clienteController.getAll(req, res)
     }
 
-    findOne(req: Request, res: Response){
-        return ClienteCtrl.getById(req, res)
+    findOne(req: Request, res: Response) {
+        return this.clienteController.getById(req, res)
     }
 
-    update(req: Request, res: Response){
-        return ClienteCtrl.updateCliente(req, res)
+    update(req: Request, res: Response) {
+        return this.clienteController.updateCliente(req, res)
     }
 
-    destroy(req: Request, res: Response){
-        console.log('aqui na rota do cliente')
-        return ClienteCtrl.deleteCliente(req, res)
+    destroy(req: Request, res: Response) {
+        return this.clienteController.deleteCliente(req, res)
     }
 }
-
-
-export default ClienteRoutes;

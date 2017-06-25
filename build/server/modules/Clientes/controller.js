@@ -1,47 +1,45 @@
 "use strict";
-var _ = require("lodash");
-var successHandler_1 = require("../../api/responses/successHandler");
-var errorHandler_1 = require("../../api/responses/errorHandler");
-var dbErrorHandler_1 = require("../../config/dbErrorHandler");
 var service_1 = require("./service");
+var response_handler_1 = require("../../api/responses/response-handler");
 var ClienteController = (function () {
     function ClienteController() {
-        this.ClienteService = new service_1.default();
+        this.responseHandler = new response_handler_1.ResponseHandler();
+        this.clienteService = new service_1.ClienteService();
     }
     ClienteController.prototype.createCliente = function (req, res) {
-        this.ClienteService.create(req.body)
-            .then(_.partial(successHandler_1.onSuccess, res))
-            .catch(_.partial(dbErrorHandler_1.dbErrorHandler, res))
-            .catch(_.partial(errorHandler_1.onError, res, 'Erro ao inserir novo cliente'));
+        var _this = this;
+        this.clienteService
+            .create(req.body)
+            .then(function (data) { return _this.responseHandler.onSuccess(res, data); })
+            .catch(function (error) { return _this.responseHandler.onError(res, error, 'Erro ao inserir novo cliente'); });
     };
     ClienteController.prototype.getAll = function (req, res) {
-        this.ClienteService
+        var _this = this;
+        this.clienteService
             .getAll()
-            .then(_.partial(successHandler_1.onSuccess, res))
-            .catch(_.partial(errorHandler_1.onError, res, 'Erro ao buscar todos os clientes'));
+            .then(function (data) { return _this.responseHandler.onSuccess(res, data); })
+            .catch(function (error) { return _this.responseHandler.onError(res, error, 'Erro ao buscar todos os clientes'); });
     };
     ClienteController.prototype.getById = function (req, res) {
+        var _this = this;
         var userId = parseInt(req.params.id);
-        this.ClienteService.getById(userId)
-            .then(_.partial(successHandler_1.onSuccess, res))
-            .catch(_.partial(errorHandler_1.onError, res, 'Cliente não encontrado'));
+        this.clienteService.getById(userId)
+            .then(function (data) { return _this.responseHandler.onSuccess(res, data); })
+            .catch(function (error) { return _this.responseHandler.onError(res, error, 'Cliente não encontrado'); });
     };
     ClienteController.prototype.updateCliente = function (req, res) {
-        var userId = parseInt(req.params.id);
-        var props = req.body;
-        this.ClienteService.update(userId, props)
-            .then(_.partial(successHandler_1.onSuccess, res))
-            .catch(_.partial(errorHandler_1.onError, res, 'Falha ao atualizar cliente'));
+        var _this = this;
+        this.clienteService.update(parseInt(req.params.id), req.body)
+            .then(function (data) { return _this.responseHandler.onSuccess(res, data); })
+            .catch(function (error) { return _this.responseHandler.onError(res, error, 'Falha ao atualizar cliente'); });
     };
     ClienteController.prototype.deleteCliente = function (req, res) {
-        console.log('aqui no controler');
-        var userId = parseInt(req.params.id);
-        this.ClienteService.delete(userId)
-            .then(_.partial(successHandler_1.onSuccess, res))
-            .catch(_.partial(errorHandler_1.onError, res, 'Erro ao excluir cliente'));
+        var _this = this;
+        this.clienteService.delete(parseInt(req.params.id))
+            .then(function (data) { return _this.responseHandler.onSuccess(res, data); })
+            .catch(function (error) { return _this.responseHandler.onError(res, error, 'Erro ao excluir cliente'); });
     };
     return ClienteController;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = ClienteController;
+exports.ClienteController = ClienteController;
 //# sourceMappingURL=controller.js.map

@@ -70,24 +70,40 @@ describe('Testes de Integracao', function () {
             });
         });
     });
-    describe("GET /api/clientes/:id", function () {
-        it('Deve retornar um Json com apenas um usuário', function (done) {
+    describe("GET /api/clientes/all", function () {
+        it('Deve retornar um Json com todos os Usuários', function (done) {
             helpers_1.request(helpers_1.app)
-                .get("/api/clientes/1")
+                .get('/api/clientes/all')
                 .set('Content-Type', 'application/json')
                 .set('Authorization', "JWT " + token)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
-                helpers_1.expect(res.body.payload.id).to.equal(1);
-                helpers_1.expect(res.body.payload).to.have.all.keys([
-                    'id', 'nome', 'email', 'password', 'cpf'
-                ]);
-                id = res.body.payload.id;
+                helpers_1.expect(res.body.payload).to.be.an('array');
+                helpers_1.expect(res.body.payload[0].nome).to.be.equal(clienteA.nome);
+                helpers_1.expect(res.body.payload[0].email).to.be.equal(clienteA.email);
                 done(error);
             });
         });
     });
     /*
+      describe("GET /api/clientes/:id", () => {
+            it('Deve retornar um Json com apenas um usuário', done => {
+                request(app)
+                    .get(`/api/clientes/1`)
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', `JWT ${token}`)
+                    .end((error, res) => {
+                        expect(res.status).to.equal(HTTPStatus.OK);
+                        expect(res.body.payload.id).to.equal(1)
+                        expect(res.body.payload).to.have.all.keys([
+                            'id', 'nome', 'email', 'password', 'cpf'
+                        ]);
+                        id = res.body.payload.id;
+                        done(error);
+                    });
+            });
+        });
+    
         describe("GET /api/clientes/:id", () => {
             it('Deve retornar um Json com apenas um usuário', done => {
                 request(app)
@@ -121,21 +137,7 @@ describe('Testes de Integracao', function () {
         })
     
     
-        describe("GET /api/clientes/all", () => {
-            it('Deve retornar um Json com todos os Usuários', done => {
-                request(app)
-                    .get('/api/clientes/all')
-                    .set('Content-Type', 'application/json')
-                    .set('Authorization', `JWT ${token}`)
-                    .end((error, res) => {
-                        expect(res.status).to.equal(HTTPStatus.OK);
-                        expect(res.body.payload).to.be.an('array');
-                        expect(res.body.payload[0].nome).to.be.equal(cliente.nome);
-                        expect(res.body.payload[0].email).to.be.equal(cliente.email);
-                        done(error);
-                    })
-            });
-        });
+    
     
         describe("DELETE /api/clientes/:id/destroy", () => {
             it('Deve deletar o usuário', done => {

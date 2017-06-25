@@ -82,6 +82,24 @@ describe('Testes de Integracao', () => {
         })
     })
 
+
+    describe("GET /api/clientes/all", () => {
+        it('Deve retornar um Json com todos os Usuários', done => {
+            request(app)
+                .get('/api/clientes/all')
+                .set('Content-Type', 'application/json')
+                .set('Authorization', `JWT ${token}`)
+                .end((error, res) => {
+                    expect(res.status).to.equal(HTTPStatus.OK);
+                    expect(res.body.payload).to.be.an('array');
+                    expect(res.body.payload[0].nome).to.be.equal(clienteA.nome);
+                    expect(res.body.payload[0].email).to.be.equal(clienteA.email);
+                    done(error);
+                })
+        });
+    });
+
+/*
   describe("GET /api/clientes/:id", () => {
         it('Deve retornar um Json com apenas um usuário', done => {
             request(app)
@@ -99,7 +117,7 @@ describe('Testes de Integracao', () => {
                 });
         });
     });
-/*
+
     describe("GET /api/clientes/:id", () => {
         it('Deve retornar um Json com apenas um usuário', done => {
             request(app)
@@ -133,21 +151,7 @@ describe('Testes de Integracao', () => {
     })
 
 
-    describe("GET /api/clientes/all", () => {
-        it('Deve retornar um Json com todos os Usuários', done => {
-            request(app)
-                .get('/api/clientes/all')
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `JWT ${token}`)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.OK);
-                    expect(res.body.payload).to.be.an('array');
-                    expect(res.body.payload[0].nome).to.be.equal(cliente.nome);
-                    expect(res.body.payload[0].email).to.be.equal(cliente.email);
-                    done(error);
-                })
-        });
-    });
+
 
     describe("DELETE /api/clientes/:id/destroy", () => {
         it('Deve deletar o usuário', done => {
