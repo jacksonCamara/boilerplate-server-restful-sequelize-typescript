@@ -2,8 +2,9 @@
 var passport = require("passport");
 var passport_jwt_1 = require("passport-jwt");
 var service_1 = require("./modules/Clientes/service");
-var config = require('./config/env/config')();
+var enviroment_1 = require("./config/env/enviroment");
 function AuthConfig() {
+    var config = new enviroment_1.Enviroment();
     var clienteService = new service_1.ClienteService();
     var opts = {
         secretOrKey: config.secret,

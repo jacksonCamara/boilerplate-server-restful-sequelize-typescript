@@ -1,9 +1,10 @@
 import * as passport from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import {ClienteService} from './modules/Clientes/service';
-const config = require('./config/env/config')();
+import { Enviroment } from './config/env/enviroment'
 
 export default function AuthConfig() {
+    const config = new Enviroment();
     const clienteService = new ClienteService();
     let opts = {
         secretOrKey: config.secret,

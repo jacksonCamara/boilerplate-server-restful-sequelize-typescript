@@ -1,13 +1,17 @@
-module.exports = {
-    env: 'test',
-    db: 'postgres',
-    dialect: 'postgres',
-    username: 'postgres',
-    password: 'postgres',
-    host: 'localhost',
-    serverPort: 3000,
-    pgPort: 5432,
-    dbURL: 'postgres://postgres:pgroot@localhost:5432/ts-api-test',
-    secret: 'S3cr3t'
-};
+"use strict";
+var TesteEnviroment = (function () {
+    function TesteEnviroment() {
+        this.env = 'test';
+        this.db = 'postgres';
+        this.dialect = 'postgres';
+        this.username = 'postgres';
+        this.password = 'postgres';
+        this.serverPort = 3000;
+        this.pgPort = 5432;
+        this.dbURL = 'postgres://postgres:pgroot@localhost:5432/ts-api-test';
+        this.secret = 'S3cr3t';
+    }
+    return TesteEnviroment;
+}());
+exports.TesteEnviroment = TesteEnviroment;
 //# sourceMappingURL=test.env.js.map

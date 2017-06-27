@@ -1,14 +1,13 @@
-
+console.log("disparou o index")
 
 var fs = require('fs');
 var path = require('path');
 import * as Sequelize from 'sequelize';
 //var Sequelize = require('sequelize');
 var basename = path.basename(module.filename);
-var config = require('../config/env/config')();
-var env = config.env || 'development';
 var db = {};
-
+import { Enviroment } from '../config/env/enviroment'
+const config = new Enviroment();
 
 const sequelize = new Sequelize(config.db, config.username, config.password, {
   host: 'localhost',

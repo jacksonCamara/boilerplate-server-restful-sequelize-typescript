@@ -1,6 +1,6 @@
 "use strict";
-var DevelopmentEnviroment = (function () {
-    function DevelopmentEnviroment() {
+var DevelopmenteEnviroment = (function () {
+    function DevelopmenteEnviroment() {
         this.env = 'test';
         this.db = 'postgres';
         this.dialect = 'postgres';
@@ -11,7 +11,7 @@ var DevelopmentEnviroment = (function () {
         this.dbURL = 'postgres://postgres:pgroot@localhost:5432/ts-api-test';
         this.secret = 'S3cr3t';
     }
-    return DevelopmentEnviroment;
+    return DevelopmenteEnviroment;
 }());
-exports.DevelopmentEnviroment = DevelopmentEnviroment;
-//# sourceMappingURL=development.env.js.map
+exports.DevelopmenteEnviroment = DevelopmenteEnviroment;
+//# sourceMappingURL=developmente.env.js.map
